@@ -88,73 +88,114 @@ unitClass = [];
 timeStamps = [];
 SpikeShapes = [];
 
-load cluster_info cluster_info
 
-% loop over channels
-for chan = 1:no_channels
-    timesfile = sprintf('times_CSC%d.mat',channels(chan));
-    currBundle = index_bundle(chan);
-    
-    if exist(timesfile,'file')
-        load(timesfile, 'cluster_class', 'spikes')
-        timeStamps = [timeStamps; cluster_class(:,2)]; %#ok<*AGROW,*IDISVAR,*NODEF> % time-stamp of spike event amplitude (sample 20)
-        SpikeShapes = [SpikeShapes; spikes]; % shape of individual spike events
-        channelID = [channelID; ones(size(cluster_class,1),1) + (chan-1)]; % channel number of each individual spike event
-        bundleID = [bundleID; zeros(size(cluster_class,1),1) + currBundle]; % bundle number of each individual spike event
-        clusterID = [clusterID; cluster_class(:,1)]; % cluster number of each individual spike event
-        
-        currChnname = cell(size(spikes,1),1);
-        currChnname(:) = {chnname{chan}(1:end-1)};
-        region = [region; currChnname];
+switch clusterAlgorithm
+    case 'Combinato'
+        load cluster_info cluster_info
 
-        % get unit-class for each spike
-        if strcmp(clusterAlgorithm,'Combinato')
-            
-            cd(fullfile(sprintf('CSC%d',chan)))
-            thresholds = h5read(sprintf('data_CSC%d.h5', chan),'/thr');
-            currThreshold = nanmedian(thresholds(3,:));
-            cd ..
-            currUnitID = cluster_info{1,chan};
-            
-        elseif strcmp(clusterAlgorithm,'WaveClus')
-            
-            spikefile = sprintf('CSC%d_spikes.mat',chan);
-            load(spikefile,'threshold_all')
-            currThreshold = nanmedian(threshold_all);
-            currUnitID = cluster_info(chan,:);
+        % loop over channels
+        for chan = 1:no_channels
+            timesfile = sprintf('times_CSC%d.mat',channels(chan));
+            currBundle = index_bundle(chan);
 
-        end
-        
-        threshold = [threshold; zeros(size(cluster_class,1),1) + currThreshold];
-        currUnitClasses = cell(size(cluster_class,1),1);
-        for uc = 1:length(currUnitID)
-            index_currUC = cluster_class(:,1) == uc;
-            currUC = currUnitID(uc);
+            if exist(timesfile,'file')
+                load(timesfile, 'cluster_class', 'spikes')
+                timeStamps = [timeStamps; cluster_class(:,2)]; %#ok<*AGROW,*IDISVAR,*NODEF> % time-stamp of spike event amplitude (sample 20)
+                SpikeShapes = [SpikeShapes; spikes]; % shape of individual spike events
+                channelID = [channelID; ones(size(cluster_class,1),1) + (channels(chan)-1)]; % channel number of each individual spike event
+                bundleID = [bundleID; zeros(size(cluster_class,1),1) + currBundle]; % bundle number of each individual spike event
+                clusterID = [clusterID; cluster_class(:,1)]; % cluster number of each individual spike event
 
-            if strcmp(clusterAlgorithm,'Combinato')
-                if currUC == -1
-                    currUC = {'A'};
-                elseif currUC == 1
-                    currUC = {'MU'};
-                elseif currUC == 2
-                    currUC = {'SU'};
+                currChnname = cell(size(spikes,1),1);
+                currChnname(:) = {chnname{chan}(1:end-1)};
+                region = [region; currChnname];
+
+                % get unit-class for each spike
+                cd(fullfile(sprintf('CSC%d',channels(chan))))
+                thresholds = h5read(sprintf('data_CSC%d.h5', channels(chan)),'/thr');
+                currThreshold = nanmedian(thresholds(3,:));
+                cd ..
+                currUnitID = cluster_info{1,chan};
+
+                threshold = [threshold; zeros(size(cluster_class,1),1) + currThreshold];
+                currUnitClasses = cell(size(cluster_class,1),1);
+                for uc = 1:length(currUnitID)
+                    index_currUC = cluster_class(:,1) == uc;
+                    currUC = currUnitID(uc);
+
+                    if currUC == -1
+                        currUC = {'A'};
+                    elseif currUC == 1
+                        currUC = {'MU'};
+                    elseif currUC == 2
+                        currUC = {'SU'};
+                    end
+
+                    currUnitClasses(index_currUC) = currUC;
+
                 end
-            elseif strcmp(clusterAlgorithm,'OSort')
-                %Check for OSort - work in progress
+                unitClass = [unitClass; currUnitClasses];
+
+                % set unitClass for artifacts
+                unclassified = cellfun(@isempty,unitClass,'Uniformoutput', false);
+                index_unclassi = cell2mat(unclassified);
+                unitClass(index_unclassi) = {'A'};
+
             end
-
-            currUnitClasses(index_currUC) = currUC;
-            
         end
-        unitClass = [unitClass; currUnitClasses];
-
-        % set unitClass for artifacts
-        unclassified = cellfun(@isempty,unitClass,'Uniformoutput', false);
-        index_unclassi = cell2mat(unclassified);
-        unitClass(index_unclassi) = {'A'};
         
-    end
+        
+    case 'WaveClus'
+        % loop over channels
+        for chan = 1:no_channels
+            timesfile = sprintf('times_CSC%d.mat',channels(chan));
+            currBundle = index_bundle(chan);
+
+            if exist(timesfile,'file')
+                load(timesfile, 'cluster_class', 'spikes')
+                timeStamps = [timeStamps; cluster_class(:,2)]; %#ok<*AGROW,*IDISVAR,*NODEF> % time-stamp of spike event amplitude (sample 20)
+                SpikeShapes = [SpikeShapes; spikes]; % shape of individual spike events
+                channelID = [channelID; ones(size(cluster_class,1),1) + (channels(chan)-1)]; % channel number of each individual spike event
+                bundleID = [bundleID; zeros(size(cluster_class,1),1) + currBundle]; % bundle number of each individual spike event
+                clusterID = [clusterID; cluster_class(:,1)]; % cluster number of each individual spike event
+
+                currChnname = cell(size(spikes,1),1);
+                currChnname(:) = {chnname{chan}(1:end-1)};
+                region = [region; currChnname];
+
+                % get unit-class for each spike
+                spikefile = sprintf('CSC%d_spikes.mat',channels(chan));
+                load(spikefile,'threshold_all')
+                currThreshold = nanmedian(threshold_all);
+                currUnitID = unique(cluster_class(:,1));
+        %             currUnitID = cluster_info(chan,:);
+
+                threshold = [threshold; zeros(size(cluster_class,1),1) + currThreshold];
+                currUnitClasses = cell(size(cluster_class,1),1);
+                for uc = 1:length(currUnitID)
+                    index_currUC = cluster_class(:,1) == uc;
+  
+                    currUC = {'MU'};
+                    disp('DER Version 1.0: using WaveClus will only separate into multi-units and artifacts')
+
+                    currUnitClasses(index_currUC) = currUC;
+
+                end
+                unitClass = [unitClass; currUnitClasses];
+
+                % set unitClass for artifacts
+                unclassified = cellfun(@isempty,unitClass,'Uniformoutput', false);
+                index_unclassi = cell2mat(unclassified);
+                unitClass(index_unclassi) = {'A'};
+
+            end
+        end
+
+    case 'OSort'
+        % Work in progress
+        
 end
+
 
 detectionLabel = ones(size(timeStamps,1),1);
 spikeInfos = table(region, bundleID, channelID, threshold, clusterID, unitClass, timeStamps, SpikeShapes, detectionLabel);
