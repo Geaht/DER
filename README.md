@@ -38,7 +38,7 @@ the detection pipeline. This was done multiplying prime numbers to the initial d
 
 2: detected in Part I
 3: detected within the same channel (Part I)
-5: detected within the same bundle (but different channel) (Part I)
+5: detected within the same bundle (but different channel) (Part I) 
 7: detected in Part III
 
 
