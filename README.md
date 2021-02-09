@@ -3,7 +3,7 @@ Readme for the Duplicate Event Removal algorithm to implement the MATLAB code fr
 https://github.com/Geaht/DER
 
 Version 1.0, released Februar 2021
-This project is licensed under the terms of the Mozilla Public License Version 2.0.
+This project is licensed under the terms of the Mozilla Public License Version 2.0. \\
 Copyright (c) by Gert Dehnen, Marcel S. Kehl and the University of Bonn Medical Center
 
 This software is tested with MATLAB on Linux, Windows and MacOS ....
