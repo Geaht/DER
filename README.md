@@ -6,7 +6,7 @@ Version 1.0, released Februar 2021
 This project is licensed under the terms of the Mozilla Public License Version 2.0.  
 Copyright (c) by Gert Dehnen, Marcel S. Kehl and the University of Bonn Medical Center  
 
-This software is tested with MATLAB on Linux, Windows and MacOS ....  
+This software is tested with MATLAB on Linux, Windows and MacOS X
 
 ------------------------------------------------------------------------------------------
 The DER algorithm is written in MATLAB2018a. Download the source code from this repository  
