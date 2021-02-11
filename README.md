@@ -18,9 +18,10 @@ Wavelet Toolbox
 
 To run the DER algorithm for the artefact detection you need to execute the DER.m in MATLAB.  
 Within this pipeline the data structure needed for the detection is created by the der_get_spikeInfos.m.  
-The supported data structure are Neuralynx binary files (NCS). Is you want to run the DER algorithm  
-on outputs from different cluster algorithms than the currently compatible onces (Combinato, WaveClus,  
-OSort), you only need to adjust the der_get_spikeInfos.m and der_save_spikeinfos.m to your data structure.  
+The supported data structure are Neuralynx binary files (NCS). If you want to run the DER algorithm  
+on outputs from different cluster algorithms than the currently compatible onces (Combinato Spike Sorting  
+and Wave_clus), you only need to adjust the der_get_spikeInfos.m and der_save_spikeinfos.m to  
+your data structure.  
 
 Part I - Detection of artifacts within diffrerent bundles  
 The detection of artifacts within different bundles is done by der_detectArtifacts.m.  
