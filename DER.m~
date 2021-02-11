@@ -1,4 +1,4 @@
-function [] = DER(dataPath, save_structures)
+function [] = DER(dataPath, save)
 %DER algorithm (Duplicate Event Removal)
 %	DER algorithm (Duplicate Event Removal) identifies spike events
 %   recorded several times (for details see Dehnen, Kehl et al.: Duplicate
@@ -15,9 +15,7 @@ function [] = DER(dataPath, save_structures)
 if exist('dataPath','var')
     cd(dataPath)
 end
-if ~exist('save_structures','var')
-    save_structures = true;
-end
+
 
 
 % collects list of region, bundleID, channelID, threshold, clusterID, unitClass, 
@@ -48,9 +46,6 @@ end
 
 
 %% Saving data
-if save_structures
-    save spikeInfos spikeInfos
-end
 % deleting spike events labeled as artificial
 spikeInfos=spikeInfos(spikeInfos.detectionLabel == 1,:);
 

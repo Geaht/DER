@@ -7,7 +7,7 @@ function [spikeInfos] = der_get_spikeInfos(clusterAlgorithm, nr_chBundle)
 %
 %   Input:
 %   clusterAlgorithm: define the cluster-algorithm with that the data are 
-%       preprocessed; Combinato, WaveClus, or OSort
+%       preprocessed; Combinato, Wave_clus
 %   nr_chBundle: number of channels per bundle; default is 8
 %
 %   Output: spikeInfos (table) containing the following information for each
@@ -145,7 +145,7 @@ switch clusterAlgorithm
         end
         
         
-    case 'WaveClus'
+    case 'Wave_clus'
         % loop over channels
         for chan = 1:no_channels
             timesfile = sprintf('times_CSC%d.mat',channels(chan));
@@ -189,11 +189,7 @@ switch clusterAlgorithm
                 unitClass(index_unclassi) = {'A'};
 
             end
-        end
-
-    case 'OSort'
-        % Work in progress
-        
+        end        
 end
 
 

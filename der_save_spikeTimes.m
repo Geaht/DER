@@ -1,10 +1,22 @@
 function [] = der_save_spikeTimes(spikeInfos, clusterAlgorithm)
 %save_spikeTimes
-%   saving CSC*_spikes.mat, times_CSC*.mat and cluster_info.mat from 
+%   saving information of extracted and sorted spike shapes from 
 %   spikeInfos after deleting spikes detected multiple times
-
-%   no_channels = length(unique(spikeInfos.channelID));
-%   channels = get_channels_gd;
+%
+%
+%   Input: spikeInfos (table) containing the following information for each
+%   spike:
+%      region: hemisphere and region of each channel
+%      bundleID: number of bundle
+%      channelID: number of channel
+%      threshold: threshold for spike-detection in µV
+%      clusterID: number of cluster of current channel
+%      unitClass: classification of unit in SU (single-), MU (multi-unit) or A
+%       (artifact)
+%      index_TS: time of amplitude of a spike in milliseconds
+%      SpikeShapes: shape of spike (in out setup using combinato: 64 samples)
+%   clusterAlgorithm: define the cluster-algorithm with that the data are 
+%       preprocessed; Combinato, Wave_clus
 %
 %
 %   Licence:
@@ -103,7 +115,7 @@ switch clusterAlgorithm
         label_info = '1 = MU 2 = SU-1 = Artif.Refers to "cluster_class"-values 1 and up.Ignores Unassigned (value 0)';
         save cluster_info cluster_info label_info
     
-    case 'WaveClus'
+    case 'Wave_clus'
 
         % save new spike-times
         for chan = 1:no_channels
@@ -126,8 +138,5 @@ switch clusterAlgorithm
                 save(spikesfile,'index_ts','spikes','-append')
                 save(timesfile,'spikes','cluster_class','-append')
             end
-        end
-    
-    case 'OSort'
-    
+        end  
 end
