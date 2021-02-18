@@ -52,5 +52,6 @@ the detection pipeline. This was done multiplying prime numbers to the initial d
 
 ## References
 
-TBA
+Cite as: TBA
+
 
