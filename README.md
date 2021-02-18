@@ -15,6 +15,7 @@ is all you need to use the DER algorithm. To run the code two packages are neede
 Statistics and Machine Learning Toolbox  
 Wavelet Toolbox  
 
+# How to run the code 
 
 To run the DER algorithm for the artefact detection you need to execute the DER.m in MATLAB.  
 You only need to define what spike-sorting algorithm you are using, like:  
