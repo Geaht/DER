@@ -1,4 +1,4 @@
-# DER 
+# DER algorithm
 Readme for the Duplicate Event Removal algorithm to implement the MATLAB code from:  
 https://github.com/Geaht/DER
 
