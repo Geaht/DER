@@ -3,7 +3,7 @@ function [KSmax] = der_test_ks(x)
 %   test_ks calculates the CDF (expcdf)
 %
 %
-%   Adapted from Wave_clus 3, https://github.com/csn-le/wave_clus; see
+%   Copied from Wave_clus 3, https://github.com/csn-le/wave_clus; see
 %   Chaure et al: A Novel and fully automatic spike-sorting implementation
 %   with variable numer of features, J Neurophysiol. 2018
 

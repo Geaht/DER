@@ -1,4 +1,4 @@
-function [] = DER(dataPath, save_structures)
+function [] = DER(dataPath, clusterAlgorithm, save_structures)
 %DER algorithm (Duplicate Event Removal)
 %	DER algorithm (Duplicate Event Removal) identifies spike events
 %   recorded several times (for details see Dehnen, Kehl et al.: Duplicate
@@ -12,7 +12,7 @@ function [] = DER(dataPath, save_structures)
 %   you can optain one at http://mozilla.org/MPL/2.0/.
 
 
-if exist('dataPath','var')
+if exist('dataPath','var') && ~isemtpy(dataPath)
     cd(dataPath)
 end
 if ~exist('save_structures','var')
@@ -56,6 +56,6 @@ spikeInfos=spikeInfos(spikeInfos.detectionLabel == 1,:);
 
 % saving CSC*_spikes.mat and times_CSC*.mat from spikeInfos after deleting
 % spikes detected multiple times 
-save_spikeTimes(spikeInfos);
+der_save_spikeTimes(spikeInfos, clusterAlgorithm);
 
 end

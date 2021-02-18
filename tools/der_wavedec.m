@@ -33,7 +33,7 @@ for bin=1:ls                                  % KS test for coefficient selectio
     aux = cc(find(cc(:,bin)>thr_dist_min & cc(:,bin)<thr_dist_max),bin);
 
     if length(aux) > 10
-        [ksstat]=test_ks(aux);
+        [ksstat]=der_test_ks(aux);
         sd(bin)=ksstat;
     else
         sd(bin)=0;
