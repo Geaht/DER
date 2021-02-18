@@ -15,7 +15,7 @@ is all you need to use the DER algorithm. To run the code two packages are neede
 Statistics and Machine Learning Toolbox  
 Wavelet Toolbox  
 
-# How to run the code 
+# How to use the code 
 
 To run the DER algorithm for the artefact detection you need to execute the DER.m in MATLAB.  
 You only need to define what spike-sorting algorithm you are using, like:  
@@ -25,6 +25,8 @@ The supported data structure are outputs from different cluster algorithms. Curr
 Combinato Spike Sorting and Wave_clus. To adjust the algorithm you only need to adjust the  
 der_get_spikeInfos.m and der_save_spikeinfos.m to your data structure. Within this pipeline  
 the data structure needed for the detection is created by the der_get_spikeInfos.m.  
+
+# Structure of the code
 
 Part I - Detection of artifacts within diffrerent bundles  
 The detection of artifacts within different bundles is done by der_detectArtifacts.m.  
