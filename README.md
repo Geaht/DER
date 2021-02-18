@@ -21,8 +21,7 @@ To run the DER algorithm for the artefact detection you need to execute the DER.
 You only need to define what spike-sorting algorithm you are using, like:  
 
 ```
-$ cd Data_dir
-$ DER([],'Wave_clus')  
+DER([],'Wave_clus')  
 ```
 
 The supported data structure are outputs from different cluster algorithms. Currently compatible are  
