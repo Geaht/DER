@@ -1,6 +1,6 @@
-function [spikeInfos,portion_of_spikes_found ] = der_detect_cross_corr_spikes(spikeInfos,isi_mat_info, ...
+function [spikeInfos,portion_of_spikes_found ] = der_detect_cross_corr_spikes(spikeInfos,cross_corr_mat_info, ...
                                  z_thr,option_for_detection,index_ampSpi,session_name,do_plots,outputpath)
-%%  [spikeInfos,portion_of_spikes_found ] = dds_detect_isi_spikes(spikeInfos,isi_mat_info, ...
+%%  [spikeInfos,portion_of_spikes_found ] = dds_detect_cross_corr_spikes(spikeInfos,cross_corr_mat_info, ...
 %                z_thr,option_for_detection,index_ampSpi,session_name,do_plots,outputpath)
 %
 % Function for identifieing and labeling spikes occuring within the central bin 
@@ -11,21 +11,21 @@ function [spikeInfos,portion_of_spikes_found ] = der_detect_cross_corr_spikes(sp
 % spikeInfos: Table containing spike information
 %             (output of the function get_spikeInfos)
 %
-% isi_mat_info: Matrix containing the cross-correlations of all cluster combination in the
-%          session (output of the function dds_cal_spike_isi_mat)
+% cross_corr_mat_info: Matrix containing the cross-correlations of all cluster combination in the
+%          session (output of the function dds_cal_spike_cross_corr_mat)
 %
 % z_thr: Threshold value of the spike-count in the central time-bin in the 
-%        z-normalized ISI matrix. Only for counts larger than z_thr, spikes 
+%        z-normalized Cross-Correlation matrix. Only for counts larger than z_thr, spikes 
 %        spikes will be deleted. (default value 20)
 %
-% option_for_detection: 1 --> detects significant zero lag ISIs 
+% option_for_detection: 1 --> detects significant zero lag Cross-Correlations 
 %                             only within the same bundle on diferent channels
-%                       2 --> detects significant zero lag ISIs over all channels
+%                       2 --> detects significant zero lag Cross-Correlations over all channels
 %
 % index_ampSpi: Index of time bin to which spike waveforms are alligend.
 %               (default 20 for Combinato)
 %
-% do_plots: If do_plots==1 ISI plots of the units exceeding the z-value 
+% do_plots: If do_plots==1 Cross-Correlation plots of the units exceeding the z-value 
 %           threshold will be ploted
 %
 % outputpath: Path where data output plots and data shall be stored.
@@ -41,11 +41,6 @@ function [spikeInfos,portion_of_spikes_found ] = der_detect_cross_corr_spikes(sp
 %   This source code form is subject to the terms of the Mozilla Public
 %   Licence, v. 2.0. if a copy of the MPL was not distributed with this file,
 %   you can optain one at http://mozilla.org/MPL/2.0/.
-
-%% remove later!
-dbstop if error
-code_path=which('der_detect_cross_corr_spikes');
-addpath(genpath(code_path(1:end-30)));
 
 
 %% Input data
@@ -73,14 +68,14 @@ if ~exist('session_name','var')  || isempty(session_name)
     session_name='temp'; 
 end
 
-if ~exist('isi_mat_info','var')  || isempty(isi_mat_info)
+if ~exist('cross_corr_mat_info','var')  || isempty(cross_corr_mat_info)
     error('No cross-correlation matrix provided');
 else 
-    % get data from ISI calculation
-    isi_mat=isi_mat_info.isi_mat;
-    spikes_in_central_bin=isi_mat_info.spikes_in_central_bin;
-    bin_width=isi_mat_info.bin_width;
-    hist_limit=isi_mat_info.hist_limit;
+    % get data from Cross-Correlation calculation
+    cross_corr_mat=cross_corr_mat_info.cross_corr_mat;
+    spikes_in_central_bin=cross_corr_mat_info.spikes_in_central_bin;
+    bin_width=cross_corr_mat_info.bin_width;
+    hist_limit=cross_corr_mat_info.hist_limit;
 end
 
 if  ~exist('option_for_detection','var')
@@ -116,7 +111,7 @@ end
 
 % get list of all cluster in the session
 cluster_list=unique([spikeInfos.channelID spikeInfos.clusterID],'rows');
-central_bin_idx = floor(size(isi_mat,3)/2)+1;
+central_bin_idx = floor(size(cross_corr_mat,3)/2)+1;
 
 %% detect spikes with high zero-lag cross-correlation 
 
@@ -176,7 +171,7 @@ if option_for_detection==1
                 cluster_number_2 = ismember(cluster_list,[ch2 clus_nr2],'rows');
 
                 % get bincounts from matrix
-                bincounts = squeeze(isi_mat(cluster_number_1,cluster_number_2,:))';
+                bincounts = squeeze(cross_corr_mat(cluster_number_1,cluster_number_2,:))';
 
                 % calculate number spikes within 1 ms (or 1 bin_width) in booth cluster
                 N_central_bin = bincounts(central_bin_idx);
@@ -368,7 +363,7 @@ if option_for_detection==1
                         end
 
                         if  sum(Low_delete_idx) > N_central_bin
-                            warning('Number of spikes to delete not matches ISI mat');
+                            warning('Number of spikes to delete not matches cross_corr mat');
                         end
 
                         % save for late which spikes should be deleted
@@ -425,7 +420,7 @@ elseif option_for_detection == 2
         cluster_number_2 = ismember(cluster_list,[ch2 clus_nr2],'rows');
                               
         % get bincounts from matrix
-        bincounts=squeeze(isi_mat(cluster_number_1,cluster_number_2,:))';
+        bincounts=squeeze(cross_corr_mat(cluster_number_1,cluster_number_2,:))';
 
         % calculate number spikes within 1 ms (or 1 bin_width) in booth cluster
         N_central_bin=bincounts(central_bin_idx);
@@ -510,7 +505,7 @@ elseif option_for_detection == 2
                'Number of spikes to delete do not match the cross-correlations!')
 
                if N_central_bin < sum(A1_delete_idx) ||  N_central_bin < sum(A2_delete_idx_new) 
-                   warning('Number of spikes to delete not matches ISI mat');
+                   warning('Number of spikes to delete not matches cross_corr mat');
                end
 
                fprintf('Deleting %i artefact spikes in channel %i cluster %i! \n', ...
@@ -555,7 +550,7 @@ elseif option_for_detection == 2
                 end
 
                if sum(MU_delete_idx) > N_central_bin
-                   warning('Number of spikes to delete not matches ISI mat');
+                   warning('Number of spikes to delete not matches cross_corr mat');
                end
                 % save for late which spikes should be deleted
                 spikes_to_delete(MU_delete_idx)=spikes_to_delete(MU_delete_idx)+1;
@@ -611,7 +606,7 @@ elseif option_for_detection == 2
                    
                    if ~(N_central_bin/2==sum(Low_delete_idx))
                        if sum(Low_delete_idx) > N_central_bin/2
-                         warning('Number of spikes to delete not matches ISI mat');
+                         warning('Number of spikes to delete not matches cross_corr mat');
                        end
                   end
                    
@@ -629,7 +624,7 @@ elseif option_for_detection == 2
                    
                    
                    if  sum(Low_delete_idx) > N_central_bin
-                         warning('Number of spikes to delete not matches ISI mat');
+                         warning('Number of spikes to delete not matches cross_corr mat');
                    end
                 end
 
@@ -662,7 +657,7 @@ fprintf('These are %.1f%% of all spikes in the central time-bin! \n \n',100*sum(
 if sum(spikes_to_delete>0) > sum(spikes_in_central_bin)
     error('Something went wrong! To many spikes marked for deletion!')
 end
-% mark spikes that should be deleted due to a significant isi with the prim factor 7
+% mark spikes that should be deleted due to a significant cross_corr with the prim factor 7
 spikeInfos.detectionLabel(spikes_to_delete>0)=spikeInfos.detectionLabel(spikes_to_delete>0)*7;
 
 % print some information on the labeled spikes
@@ -681,7 +676,7 @@ fprintf(' %.2f %% of all artifact spikes (%i) were labeled. \n', 100*N_art_del7/
 
 if do_plots
     %% save output data
-    save(sprintf('spikeInfos_outputISI_%s.mat',session_name), 'spikeInfos');
+    save(sprintf('spikeInfos_outputcross_corr_%s.mat',session_name), 'spikeInfos');
 end
 
 end % of function

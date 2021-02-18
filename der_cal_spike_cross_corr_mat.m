@@ -1,4 +1,4 @@
-function [isi_mat_info] = ...
+function [cross_corr_mat_info] = ...
             der_cal_spike_cross_corr_mat(spikeInfos,hist_limit,bin_width,outputpath,do_plots,session_name,skip_labeled_spikes)
 %% output_spikes=dds_cal_spikes_corr_mat(spikeInfos,hist_limit,bin_width,outputpath,do_plots,save_data_to_file)
 % Function to calculate matrix with the cross-correlations of all clusters in a session
@@ -8,10 +8,10 @@ function [isi_mat_info] = ...
 % spikeInfos: Table containing spike information
 %             (output of the function get_spikeInfos)
 %
-% hist_limit: Maximal lag of spikes counted in the ISI matrix 
+% hist_limit: Maximal lag of spikes counted in the cross_corr matrix 
 %             (Default 20 ms)
 %
-% bin_width: Width of time bins within the ISI matrix
+% bin_width: Width of time bins within the cross_corr matrix
 %            (Default 0.5 ms)
 %
 % outputpath: Path where data and output plots shall be stored.
@@ -26,7 +26,7 @@ function [isi_mat_info] = ...
 %           
 % Outouts:
 %
-% isi_mat: Matrix (N_cluter X Ncluster X 2 time-bins) 
+% cross_corr_mat: Matrix (N_cluter X Ncluster X 2 time-bins) 
 %          stores cross-correlation counts of all cluster combinations at different time
 %          lags
 %
@@ -111,7 +111,7 @@ n_cluster=numel(cluster_list(:,1));
 central_bin_idx=floor(numel(-hist_limit:bin_width:hist_limit)/2)+1;
 
 % generate the cross-correlation matrix for all cluster in the session
-isi_mat=zeros(n_cluster,n_cluster,(2*hist_limit/bin_width)+1);
+cross_corr_mat=zeros(n_cluster,n_cluster,(2*hist_limit/bin_width)+1);
 
 % save for eac spike it it is in a central time-bin
 spikes_in_central_bin=zeros(numel(spikeInfos.timeStamps),1);
@@ -127,12 +127,12 @@ for idx_lead_spike=1:numel(spikeInfos.timeStamps)
     if idx_lead_spike/numel(spikeInfos.timeStamps) > 0.01*percentage_job_done_counter
         % calculate the expected computation time till job is done based on first 1% of data
         if percentage_job_done_counter==1
-            fprintf('Expected time till all ISIs are calculated: %.2f min  \n',100*toc/60);
+            fprintf('Expected time till all cross_corrs are calculated: %.2f min  \n',100*toc/60);
             fprintf('__________________________________________________________________ \n     \n');
         end
         
         % plot a progressbar in output
-        dds_progressbar('Calculating ISIs',percentage_job_done_counter);
+        dds_progressbar('Calculating cross_corrs',percentage_job_done_counter);
         percentage_job_done_counter=percentage_job_done_counter+1;
     end
     
@@ -170,9 +170,9 @@ for idx_lead_spike=1:numel(spikeInfos.timeStamps)
         cluster_number_temp_spike  = ismember(cluster_list,cluster_info_temp_spike,'rows');
 
         % round diff_spike_times to use it as index and increase count in cross-correlation mat
-        isi_mat(cluster_number_lead_spike,cluster_number_temp_spike,...
+        cross_corr_mat(cluster_number_lead_spike,cluster_number_temp_spike,...
                          central_bin_idx+round(diff_spike_times/bin_width))...
-            =   1 +  isi_mat(cluster_number_lead_spike,cluster_number_temp_spike,...
+            =   1 +  cross_corr_mat(cluster_number_lead_spike,cluster_number_temp_spike,...
                          central_bin_idx+round(diff_spike_times/bin_width));
         
         % go to next spike
@@ -189,25 +189,25 @@ corr_calculation_time=toc;
 fprintf('\n Time needed to calculate all cross-correlations: %i min \n',corr_calculation_time/60.0);
 
 % transform trianguar matrix to full matrix
-A = isi_mat; B = flip(A,3);  C = permute(B ,[2 1 3]); D=A+C;
+A = cross_corr_mat; B = flip(A,3);  C = permute(B ,[2 1 3]); D=A+C;
 D(1:end,1:end,central_bin_idx) = A(:,:,central_bin_idx) + C(:,:,central_bin_idx);
-isi_mat=D;
+cross_corr_mat=D;
 
-isi_bin_width=bin_width;
+cross_corr_bin_width=bin_width;
 
 %% save data
-save([outputpath filesep sprintf('isi_mat_%i_ms_width_%i_ms_bins_%s.mat',hist_limit,bin_width,session_name)],'isi_mat','spikes_in_central_bin','isi_bin_width');
+save([outputpath filesep sprintf('cross_corr_mat_%i_ms_width_%i_ms_bins_%s.mat',hist_limit,bin_width,session_name)],'cross_corr_mat','spikes_in_central_bin','cross_corr_bin_width');
 
 %% plot the normalized correlation matrix
     
-% z-normalize the isi matrix
-norm_isi_mat=zeros(size(isi_mat));
-central_z_mat=zeros(size(isi_mat,1),size(isi_mat,2));
+% z-normalize the cross_corr matrix
+norm_cross_corr_mat=zeros(size(cross_corr_mat));
+central_z_mat=zeros(size(cross_corr_mat,1),size(cross_corr_mat,2));
 
-for iclus1=1:size(isi_mat,1)
-    for iclus2=1:size(isi_mat,2)
-        norm_isi_mat(iclus1,iclus2,:) = isi_mat(iclus1,iclus2,:)/sum(isi_mat(iclus1,iclus2,:));
-        temp_bincounts= squeeze(isi_mat(iclus1,iclus2,:))';
+for iclus1=1:size(cross_corr_mat,1)
+    for iclus2=1:size(cross_corr_mat,2)
+        norm_cross_corr_mat(iclus1,iclus2,:) = cross_corr_mat(iclus1,iclus2,:)/sum(cross_corr_mat(iclus1,iclus2,:));
+        temp_bincounts= squeeze(cross_corr_mat(iclus1,iclus2,:))';
         
         if std(temp_bincounts(1:end~=central_bin_idx))  == 0 
             central_z_mat(iclus1,iclus2) = 0;
@@ -273,7 +273,7 @@ if do_plots==1
 
     % file names 
     file_name=[outputpath filesep session_name '-' ...
-        sprintf('z-value-isi-central-bin_with_artifacts_%i_ms_width_%i_mus_bins.png',...
+        sprintf('z-value-cross-corr-central-bin_with_artifacts_%i_ms_width_%i_mus_bins.png',...
         hist_limit,1000*bin_width)];
     % save figure in outputpath
     print(ff,file_name,'-dpng', '-r300');
@@ -281,20 +281,20 @@ end
 
 
 % save relevant information in an output struct 
-isi_mat_info.isi_mat = isi_mat;
-isi_mat_info.hist_limit = hist_limit;
-isi_mat_info.bin_width = bin_width;
-isi_mat_info.spikes_in_central_bin = spikes_in_central_bin;
-isi_mat_info.corr_calculation_time = corr_calculation_time;
-isi_mat_info.norm_isi_mat = norm_isi_mat;
-isi_mat_info.central_z_mat = central_z_mat;
-isi_mat_info.cluster_labels=cluster_labels;
-isi_mat_info.session_name=session_name;
-isi_mat_info.cluster_list=cluster_list;
-isi_mat_info.n_cluster=n_cluster;
-isi_mat_info.central_bin_idx=central_bin_idx;
+cross_corr_mat_info.cross_corr_mat = cross_corr_mat;
+cross_corr_mat_info.hist_limit = hist_limit;
+cross_corr_mat_info.bin_width = bin_width;
+cross_corr_mat_info.spikes_in_central_bin = spikes_in_central_bin;
+cross_corr_mat_info.corr_calculation_time = corr_calculation_time;
+cross_corr_mat_info.norm_cross_corr_mat = norm_cross_corr_mat;
+cross_corr_mat_info.central_z_mat = central_z_mat;
+cross_corr_mat_info.cluster_labels=cluster_labels;
+cross_corr_mat_info.session_name=session_name;
+cross_corr_mat_info.cluster_list=cluster_list;
+cross_corr_mat_info.n_cluster=n_cluster;
+cross_corr_mat_info.central_bin_idx=central_bin_idx;
 
-save([outputpath filesep sprintf('cross_corr_mat_%i_ms_width_%i_ms_bins_%s.mat',hist_limit,bin_width,session_name)],'isi_mat','spikes_in_central_bin','isi_bin_width','isi_mat_info');
+save([outputpath filesep sprintf('cross_corr_mat_%i_ms_width_%i_ms_bins_%s.mat',hist_limit,bin_width,session_name)],'cross_corr_mat','spikes_in_central_bin','cross_corr_bin_width','cross_corr_mat_info');
 
 
 end % of function

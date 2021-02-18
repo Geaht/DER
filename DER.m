@@ -42,9 +42,9 @@ end
 % spike events are labeled as artifacts
 
 % first calculate a matrix containing all cross-correlations
-[isi_mat_info] = der_cal_spike_cross_corr_mat(spikeInfos);
+[cross_corr_mat_info] = der_cal_spike_cross_corr_mat(spikeInfos);
 
-[spikeInfos] = der_detect_cross_corr_spikes(spikeInfos, isi_mat_info);
+[spikeInfos] = der_detect_cross_corr_spikes(spikeInfos, cross_corr_mat_info);
 
 
 %% Saving data
