@@ -12,8 +12,8 @@ This software is tested with MATLAB (R2018a) on Linux, Windows and MacOS X
 The DER algorithm is written in MATLAB2018a. Download the source code from this repository  
 is all you need to use the DER algorithm. To run the code two packages are needed:  
 
-Statistics and Machine Learning Toolbox  
-Wavelet Toolbox  
+* Statistics and Machine Learning Toolbox
+* Wavelet Toolbox  
 
 ## How to use the code 
 
