@@ -31,13 +31,13 @@ the data structure needed for the detection is created by the der_get_spikeInfos
 
 ## Structure of the code
 
-Part I - Detection of artifacts within diffrerent bundles  
+* Part I - Detection of artifacts within diffrerent bundles  
 The detection of artifacts within different bundles is done by der_detectArtifacts.m.  
 
-Part II - Detection within the same channel of bundle  
+* Part II - Detection within the same channel of bundle  
 The detection of artifacts within different bundles is done by der_detectDuplicateSpikes.  
 
-Part III - Detection of suspicious cross-correlations  
+* Part III - Detection of suspicious cross-correlations  
 Analysing the central bin of all combinations of cross-correlations is done by  
 der_cal_spike_cross_corr_mat.m (preparing the data) and der_detect_cross_corr_spikes.m.  
 
