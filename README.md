@@ -19,7 +19,11 @@ Wavelet Toolbox
 
 To run the DER algorithm for the artefact detection you need to execute the DER.m in MATLAB.  
 You only need to define what spike-sorting algorithm you are using, like:  
-DER([],'Wave_clus')  
+
+```
+$ cd Data_dir
+$ DER([],'Wave_clus')  
+```
 
 The supported data structure are outputs from different cluster algorithms. Currently compatible are  
 Combinato Spike Sorting and Wave_clus. To adjust the algorithm you only need to adjust the  
