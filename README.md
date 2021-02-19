@@ -20,11 +20,11 @@ The DER algorithm is written in MATLAB2018a. To run the code the following MATLA
 ## How to use the code 
 
 Download the source code from this repository and add it along with the subdir to your MATLAB path. 
-To run the automated artefact detection you need to execute the `DER.m` in MATLAB.  
-Please provide the data path and define the spike-sorting algorithm used ('Wave_clus' or 'Combinato') as:  
+To run the automated artefact detection you need to execute `DER.m` in MATLAB.  
+Please provide the data path and define the spike-sorting algorithm used (*'Wave_clus'* or *'Combinato'*) as:  
 
 ```
-DER(data_path,'Wave_clus')  
+DER(data_path,'Wave_clus')
 ```  
 
 ## Structure of the code
