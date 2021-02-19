@@ -44,13 +44,13 @@ Suspicious central bins of the corss-correlograms are identified by `der_detect_
 
 ### Data structres
 
-Within this pipeline a data structure needed for detection is created by `der_get_spikeInfos.m`.
+Within this pipeline the data structure needed for detection is created by `der_get_spikeInfos.m`.
 This script generates a MATLAB table containing all required information on the recorded spike events.
 These information include the timestamp and the waveform of the spike event (64 data points). 
-Additionally, information on the recroded cluster (clusrter ID, unit class, channel number, detection threshold, wire bundle ID, anatomical region) as well as a detection label is stored. 
+Additionally, information on the recroded clusters (clusrter ID, unit class, channel number, detection threshold, wire bundle ID, anatomical region) as well as a detection label is stored. 
 
 The DER alogorithm is currently compatible with the output structures of *Combinato Spike Sorting* and *Wave_clus*.
-In order to apply the algorithm to different spike sorting algorithms you can easily adjust `der_get_spikeInfos.m` 
+In order to apply the algorithm to other spike sorting algorithms you can easily adjust `der_get_spikeInfos.m` 
 and `der_save_spikeinfos.m` to your data structure. 
 
 Detected spike events are labeled individually for each part of the detection pipeline using prime factor labels.
