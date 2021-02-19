@@ -38,7 +38,7 @@ The detection of artifacts across different bundles is done by `der_detectArtifa
 The detection of artifacts within bundles is done by `der_detectDuplicateSpikes`.  
 
 * Part III - Detection of suspicious cross-correlations  
-Calculation of all cross-correlations is performed by `der_cal_spike_cross_corr_mat.m`. 
+Calculation of all cross-correlations is performed by `der_cal_spike_cross_corr_mat.m`.
 Suspicious central bins of the corss-correlograms are identified by `der_detect_cross_corr_spikes.m`.
 
 ### Data structres
