@@ -52,7 +52,7 @@ Detected spike events are labeled individually for each part of the detection pi
 The detection label is given by the procuct of the following prime factors:
 
 factor | part detected
----|---
+---|:---
 2 | across bundles (Part I)
 3 | within the same channel (Part I)  
 5 | within the same bundle (but different channel) (Part I)  
