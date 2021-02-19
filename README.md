@@ -18,7 +18,7 @@ is all you need to use the DER algorithm. To run the code two packages are neede
 ## How to use the code 
 
 To run the DER algorithm for the artefact detection you need to execute the DER.m in MATLAB.  
-You only need to define what spike-sorting algorithm you are using:  
+You only need to define what spike-sorting algorithm you are using and the path to the data:  
 
 ```
 DER(data_path,'Wave_clus')  
