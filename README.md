@@ -23,27 +23,32 @@ Please define the spike-sorting algorithm used ('Wave_clus' or 'Combinato') and 
 
 ```
 DER(data_path,'Wave_clus')  
-```
-
-The supported data structure are outputs of different cluster algorithms. Currently compatible are  
-Combinato Spike Sorting and Wave_clus. In order to apply the DER algorithm to a different 
-spike sorting algorithms you can adjust der_get_spikeInfos.m and der_save_spikeinfos.m to your data structure. 
-Within this pipeline the data structure needed for the detection is created by the der_get_spikeInfos.m.  
-
+```  
 
 ## Structure of the code
 
 * Part I - Detection of artifacts within diffrerent wire bundles  
-The detection of artifacts across different bundles is done by '''der_detectArtifacts.m'''.  
+The detection of artifacts across different bundles is done by der_detectArtifacts.m.  
 
 * Part II - Detection of spikes within channels of same wire bundle  
-The detection of artifacts within bundles is done by '''der_detectDuplicateSpikes'''.  
+The detection of artifacts within bundles is done by der_detectDuplicateSpikes.  
 
 * Part III - Detection of suspicious cross-correlations  
-Calculation of all cross-correlations is performed by '''der_cal_spike_cross_corr_mat.m '''. 
-Suspicious central bins of the corss-correlograms are identified by '''der_detect_cross_corr_spikes.m'''.
+Calculation of all cross-correlations is performed by der_cal_spike_cross_corr_mat.m. 
+Suspicious central bins of the corss-correlograms are identified by der_detect_cross_corr_spikes.m.
 
-Detected spike events are labeled individually for each part of  the detection pipeline using prime factor labels.
+
+Within this pipeline the data structure needed for detection (spikeInfros) is created by der_get_spikeInfos.m.
+This script generates a MATLAB table containing all required information on the recorded spike events.
+These information include the timestamp and the waveform of the spike event. 
+Additionally, information on the recroded cluster (clusrter ID, unit class, channel number, detection threshold, wire bundle ID, anatomical region) as well as a detection label is stored. 
+
+
+The DER alogorithm is currently compatible with the output structures of Combinato Spike Sorting and Wave_clus.
+In order to apply the algorithm to different spike sorting algorithms you can easily adjust der_get_spikeInfos.m 
+and der_save_spikeinfos.m to your data structure. 
+
+Detected spike events are labeled individually for each part of the detection pipeline using prime factor labels.
 The detection label is given by the procuct of the following prime factors:
 
 * 2 - detected across bundles (Part I)
