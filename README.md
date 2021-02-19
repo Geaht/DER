@@ -20,7 +20,7 @@ To run the code the following MATLAB packages are required:
 
 ## How to use the code 
 
-Download the source code from this repository and add it along with the subdir to your MATLAB path. 
+Download the source code from this repository and add it to your MATLAB path. 
 To run the automated artefact detection you need to execute `DER.m` in MATLAB.  
 Please provide the data path and define the spike-sorting algorithm used (*'Wave_clus'* or *'Combinato'*) as:  
 
@@ -36,7 +36,7 @@ The detection pipeline is structured in three parts:
 The detection of artifacts across different bundles is done by `der_detectArtifacts.m`.  
 
 * Part II - Detection of spikes within channels of same wire bundle  
-The detection of artifacts within bundles is done by `der_detectDuplicateSpikes`.  
+The detection of artifacts within bundles is done by `der_detectDuplicateSpikes.m`.  
 
 * Part III - Detection of suspicious cross-correlations  
 Calculation of all cross-correlations is performed by `der_cal_spike_cross_corr_mat.m`.
