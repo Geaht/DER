@@ -30,18 +30,18 @@ DER(data_path,'Wave_clus')
 The detection pipeline is structured in three parts: 
 
 * Part I - Detection of artifacts within diffrerent wire bundles  
-The detection of artifacts across different bundles is done by der_detectArtifacts.m.  
+The detection of artifacts across different bundles is done by *der_detectArtifacts.m*.  
 
 * Part II - Detection of spikes within channels of same wire bundle  
-The detection of artifacts within bundles is done by der_detectDuplicateSpikes.  
+The detection of artifacts within bundles is done by *der_detectDuplicateSpikes*.  
 
 * Part III - Detection of suspicious cross-correlations  
-Calculation of all cross-correlations is performed by der_cal_spike_cross_corr_mat.m. 
-Suspicious central bins of the corss-correlograms are identified by der_detect_cross_corr_spikes.m.
+Calculation of all cross-correlations is performed by *der_cal_spike_cross_corr_mat.m*. 
+Suspicious central bins of the corss-correlograms are identified by *der_detect_cross_corr_spikes.m*.
 
 ### Data structres
 
-Within this pipeline a data structure needed for detection is created by der_get_spikeInfos.m.
+Within this pipeline a data structure needed for detection is created by *der_get_spikeInfos.m*.
 This script generates a MATLAB table containing all required information on the recorded spike events.
 These information include the timestamp and the waveform of the spike event (64 data points). 
 Additionally, information on the recroded cluster (clusrter ID, unit class, channel number, detection threshold, wire bundle ID, anatomical region) as well as a detection label is stored. 
