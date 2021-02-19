@@ -1,7 +1,7 @@
 # DER algorithm
 Duplicate Event Removal algorithm - Artifact detection in human single unit recordings 
 
-Readme for the Duplicate Event Removal algorithm to implement the MATLAB code from:  
+Readme for the Duplicate Event Removal algorithm:  
 https://github.com/Geaht/DER
 
 Version 1.0, released Februar 2021  
