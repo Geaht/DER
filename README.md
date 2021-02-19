@@ -3,31 +3,32 @@ Readme for the Duplicate Event Removal algorithm to implement the MATLAB code fr
 https://github.com/Geaht/DER
 
 Version 1.0, released Februar 2021  
+
 This project is licensed under the terms of the Mozilla Public License Version 2.0.  
 Copyright (c) by Gert Dehnen, Marcel S. Kehl, Florian Mormann and the University of Bonn Medical Center  
-
-This software is tested with MATLAB (R2018a) on Linux, Windows and MacOS X
+This software was tested with MATLAB (R2018a) on Linux, Windows and MacOS X
 
 ------------------------------------------------------------------------------------------
-The DER algorithm is written in MATLAB2018a. Download the source code from this repository  
-is all you need to use the DER algorithm. To run the code two packages are needed:  
+The DER algorithm is written in MATLAB2018a. To run the code two packages are required:  
 
 * Statistics and Machine Learning Toolbox
 * Wavelet Toolbox  
 
+
 ## How to use the code 
 
-To run the DER algorithm for the artefact detection you need to execute the DER.m in MATLAB.  
-You only need to define what spike-sorting algorithm you are using and the path to the data:  
+Download the source code from this repository and add it along with the subdir to your MATLAB path. 
+To run the DER algorithm for automated artefact detection you need to execute the DER.m in MATLAB.  
+Please define the spike-sorting algorithm used ('Wave_clus' or 'Combinato') and the path to the data as:  
 
 ```
 DER(data_path,'Wave_clus')  
 ```
 
-The supported data structure are outputs from different cluster algorithms. Currently compatible are  
-Combinato Spike Sorting and Wave_clus. To adjust the algorithm you only need to adjust the  
-der_get_spikeInfos.m and der_save_spikeinfos.m to your data structure. Within this pipeline  
-the data structure needed for the detection is created by the der_get_spikeInfos.m.  
+The supported data structure are outputs of different cluster algorithms. Currently compatible are  
+Combinato Spike Sorting and Wave_clus. In order to apply the DER algorithm to a different spike sorting algorithms
+you adjust der_get_spikeInfos.m and der_save_spikeinfos.m to your data structure. 
+Within this pipeline the data structure needed for the detection is created by the der_get_spikeInfos.m.  
 
 ## Structure of the code
 
