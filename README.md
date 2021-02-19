@@ -37,7 +37,7 @@ The detection of artifacts within bundles is done by der_detectDuplicateSpikes.
 Calculation of all cross-correlations is performed by der_cal_spike_cross_corr_mat.m. 
 Suspicious central bins of the corss-correlograms are identified by der_detect_cross_corr_spikes.m.
 
-
+### Data structres
 
 Within this pipeline a data structure needed for detection is created by der_get_spikeInfos.m.
 This script generates a MATLAB table containing all required information on the recorded spike events.
@@ -51,12 +51,12 @@ and der_save_spikeinfos.m to your data structure.
 Detected spike events are labeled individually for each part of the detection pipeline using prime factor labels.
 The detection label is given by the procuct of the following prime factors:
 
-factor | part detected
----|:---
-2 | across bundles (Part I)
-3 | within the same channel (Part I)  
-5 | within the same bundle (but different channel) (Part I)  
-7 | based on the cross-correlograms (Part III)
+Factor | Part detected
+:---|:---
+2   | across bundles (Part I)
+3   | within the same channel (Part I)  
+5   | within the same bundle (but different channel) (Part I)  
+7   | based on the cross-correlograms (Part III)
 
 ## References
 
