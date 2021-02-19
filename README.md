@@ -51,11 +51,12 @@ and der_save_spikeinfos.m to your data structure.
 Detected spike events are labeled individually for each part of the detection pipeline using prime factor labels.
 The detection label is given by the procuct of the following prime factors:
 
-* 2 - detected across bundles (Part I)
-* 3 - detected within the same channel (Part I)  
-* 5 - detected within the same bundle (but different channel) (Part I)  
-* 7 - detected based on the cross-correlograms (Part III)
-
+factor | part detected
+---|---
+2 | across bundles (Part I)
+3 | within the same channel (Part I)  
+5 | within the same bundle (but different channel) (Part I)  
+7 | based on the cross-correlograms (Part III)
 
 ## References
 
