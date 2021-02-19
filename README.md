@@ -27,6 +27,8 @@ DER(data_path,'Wave_clus')
 
 ## Structure of the code
 
+The detection pipeline is structured in three parts: 
+
 * Part I - Detection of artifacts within diffrerent wire bundles  
 The detection of artifacts across different bundles is done by der_detectArtifacts.m.  
 
