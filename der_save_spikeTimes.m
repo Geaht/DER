@@ -45,8 +45,7 @@ for chan = 1:no_channels
     header = textscan(fileID,'%s',55);
     header = header{1};
     fclose(fileID);       
-    currChanName = regexp(header{find(strcmp('Name', header))+1},'\','split');
-    chnname{chan} = currChanName{3}(1:end-4);
+    chnname{chan} = header{find(strcmp('-AcqEntName',header))+1};
 end
 [~, idx] = sort(channels);
 chnname = chnname(idx);

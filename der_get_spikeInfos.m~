@@ -32,6 +32,7 @@ if ~exist('clusterAlgorithm','var')
     error('not enough input argumemts: "clusterAlgorithm" is missing')
 end
 
+dbstop if error
 % set default number of channels per bundle
 if ~exist('nr_chanPerBundle','var')
     nr_chBundle = 8;
@@ -53,7 +54,9 @@ for chan = 1:no_channels
     header = textscan(fileID,'%s',55);
     header = header{1};
     fclose(fileID);
-    chnname{chan} = header{find(strcmp('-AcqEntName',header))+1};
+    currChanName = header{find(strcmp('-AcqEntName',header))+1};
+%     currChanName = regexp(header{find(strcmp('Name', header))+1},'\','split');
+    chnname{chan} = currChanName{3}(1:end-4);
 end
 [channels, idx] = sort(channels);
 chnname = chnname(idx);
