@@ -25,7 +25,7 @@ To run the automated artefact detection you need to execute `DER.m` in MATLAB.
 Please provide the data path and define the spike-sorting algorithm used (*'Wave_clus'* or *'Combinato'*) as:  
 
 ```
-DER(data_path,'Combianto')
+DER(data_path,'Combinato')
 ```  
 
 ## Structure of the code
