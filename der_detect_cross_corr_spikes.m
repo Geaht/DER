@@ -662,12 +662,12 @@ spikeInfos.detectionLabel(spikes_to_delete>0)=spikeInfos.detectionLabel(spikes_t
 
 % print some information on the labeled spikes
 N_art_del7 = sum(strcmp(spikeInfos.unitClass(mod(spikeInfos.detectionLabel,7)==0),'A'));
-N_SU_del7  = sum(strcmp(spikeInfos.unitClass(mod(spikeInfos.detectionLabel,7)==0),'MU'));
-N_MU_del7  = sum(strcmp(spikeInfos.unitClass(mod(spikeInfos.detectionLabel,7)==0),'SU'));
+N_MU_del7  = sum(strcmp(spikeInfos.unitClass(mod(spikeInfos.detectionLabel,7)==0),'MU'));
+N_SU_del7  = sum(strcmp(spikeInfos.unitClass(mod(spikeInfos.detectionLabel,7)==0),'SU'));
 
 N_art = sum(strcmp(spikeInfos.unitClass,'A'));
-N_SU  = sum(strcmp(spikeInfos.unitClass,'MU'));
-N_MU  = sum(strcmp(spikeInfos.unitClass,'SU'));
+N_MU  = sum(strcmp(spikeInfos.unitClass,'MU'));
+N_SU  = sum(strcmp(spikeInfos.unitClass,'SU'));
 
 fprintf(' %.2f %% of all SU spikes (%i) were labeled. \n', 100*N_SU_del7/N_SU,N_SU)
 fprintf(' %.2f %% of all MU spikes (%i) were labeled. \n', 100*N_MU_del7/N_MU,N_MU)

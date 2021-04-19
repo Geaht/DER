@@ -27,7 +27,7 @@ function [spikeInfos] = der_get_spikeInfos(clusterAlgorithm, nr_chBundle)
 %   This source code form is subject to the terms of the Mozilla Public
 %   Licence, v. 2.0. if a copy of the MPL was not distributed with this file,
 %   you can optain one at http://mozilla.org/MPL/2.0/.
-
+dbstop if error
 if ~exist('clusterAlgorithm','var')
     error('not enough input argumemts: "clusterAlgorithm" is missing')
 end
