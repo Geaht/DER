@@ -4,7 +4,7 @@ Duplicate Event Removal algorithm - Artifact detection in human single unit reco
 Readme for the Duplicate Event Removal algorithm:  
 https://github.com/Geaht/DER
 
-Version 1.0, released Februar 2021  
+Version 1.0, released February 2021  
 
 This project is licensed under the terms of the Mozilla Public License Version 2.0.  
 Copyright (c) by Gert Dehnen, Marcel S. Kehl, Florian Mormann and the University of Bonn Medical Center  
@@ -32,7 +32,7 @@ DER(data_path,'Combinato')
 
 The detection pipeline is structured in three parts: 
 
-* Part I - Detection of artifacts within diffrerent wire bundles  
+* Part I - Detection of artifacts within different wire bundles  
 The detection of artifacts across different bundles is done by `der_detectArtifacts.m`.  
 
 * Part II - Detection of spikes within channels of same wire bundle  
@@ -40,14 +40,14 @@ The detection of artifacts within bundles is done by `der_detectDuplicateSpikes.
 
 * Part III - Detection of suspicious cross-correlations  
 Calculation of all cross-correlations is performed by `der_cal_spike_cross_corr_mat.m`.
-Spike events in suspicious central bins of the corss-correlograms are identified by `der_detect_cross_corr_spikes.m`.
+Spike events in suspicious central bins of the cross-correlograms are identified by `der_detect_cross_corr_spikes.m`.
 
 ### Data structures
 
 Within this pipeline the data structure needed for detection is created by `der_get_spikeInfos.m`.
 This script generates a MATLAB table containing all required information on the recorded spike events.
-These information include the timestamp and the waveform of the spike event (64 data points). 
-Additionally, information on the recroded clusters (clusrter ID, unit class, channel number, detection threshold, wire bundle ID, anatomical region) as well as a detection label is stored. 
+These structure includes the timestamp and the waveform of the spike event (64 data points). 
+Additionally, information on the recorded clusters (cluster ID, unit class, channel number, detection threshold, wire bundle ID, anatomical region) as well as a detection label is stored. 
 
 The DER alogorithm is currently compatible with the output structures of *Combinato Spike Sorting* and *Wave_clus*.
 In order to apply the algorithm to other spike sorting algorithms you can easily adjust `der_get_spikeInfos.m` 
