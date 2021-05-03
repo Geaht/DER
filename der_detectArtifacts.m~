@@ -44,7 +44,6 @@ no_samples = 40;
 if ~exist('minNoEventsToCompaire','var') || isempty(minNoEventsToCompaire)
     minNoEventsToCompaire = 2;
 end
-minNoPairs = size(nchoosek([1:minNoEventsToCompaire],2),1);
 
 % sort all spiketimes
 if issorted(spikeInfos.timeStamps)
@@ -112,7 +111,7 @@ for currSpike = 1:length(diffDuSp)
     diffBundles = diff([spikeInfos.bundleID(index_chToCompare(:,1)) spikeInfos.bundleID(index_chToCompare(:,2))],1,2);
     index_chToCompare = index_chToCompare(diffBundles ~=0,:);
 
-    if ~isempty(index_chToCompare) && size(index_chToCompare,1) >= minNoPairs
+    if ~isempty(index_chToCompare) && size(index_chToCompare,1) >= minNoEventsToCompaire-1
         no_spikesToCompaire = size(index_chToCompare,1);
         possDuplSpi1 = spikeInfos.SpikeShapes(index_chToCompare(:,1),1:no_samples);
         possDuplSpi2 = spikeInfos.SpikeShapes(index_chToCompare(:,2),1:no_samples);
