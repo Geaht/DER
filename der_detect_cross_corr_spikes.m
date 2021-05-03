@@ -234,7 +234,7 @@ if option_for_detection==1
                             
                              % find spikes in the secound cluster that are
                              % within the bin-width
-                             temp_idx_A2_delete = find(abs(A1_spike_times(idx1) - A2_spike_times)<= bin_width/2);
+                             temp_idx_A2_delete = find(abs(A1_spike_times(idx1) - A2_spike_times)< bin_width/2);
                             
                              % if there are spikes of cluster 2
                              % in the same time bin delete them
@@ -484,7 +484,7 @@ elseif option_for_detection == 2
                 A2_delete_idx_new=zeros(size(A2_delete_idx));
 
                 for idx1=1:numel(A1_spike_times)
-                     tem_idx_A2_delete = find(abs(A1_spike_times(idx1) - A2_spike_times)<= bin_width/2);
+                     tem_idx_A2_delete = find(abs(A1_spike_times(idx1) - A2_spike_times) < bin_width/2);
                      
                      if numel(tem_idx_A2_delete) > 0
                           A2_delete_idx_new(A2_delete_idx_numbers(tem_idx_A2_delete))=1;
@@ -500,10 +500,11 @@ elseif option_for_detection == 2
                % sanity check
                temp_delta_t= pdist2(spikeInfos.timeStamps(logical(A2_delete_idx_new)),...
                    spikeInfos.timeStamps(logical(A1_delete_idx)));
-
-               assert(sum(sum(temp_delta_t<=bin_width/2)) == N_central_bin,...
-               'Number of spikes to delete do not match the cross-correlations!')
-
+            
+               % changed from smaller equal to smaller to avoid error if dist is exactly bin_width/2
+               assert(sum(sum(temp_delta_t<= bin_width/2)) == N_central_bin,...
+               'Number of spikes to delete do not match the cross-correlations!');
+           
                if N_central_bin < sum(A1_delete_idx) ||  N_central_bin < sum(A2_delete_idx_new) 
                    warning('Number of spikes to delete not matches cross_corr mat');
                end
@@ -650,7 +651,7 @@ end
 
 %% Delete double recorded spikes
 portion_of_spikes_found=100*sum(spikes_to_delete>0)/numel(spikes_to_delete);
-fprintf('Time for identifing  a total of %i spikes for deletion: %.1f sec \n \n',sum(spikes_to_delete>0),toc)
+fprintf('Time for identifying  a total of %i spikes for deletion: %.1f sec \n \n',sum(spikes_to_delete>0),toc)
 fprintf('These are %.1f%% of all spikes! \n',100*sum(spikes_to_delete>0)/numel(spikes_to_delete))
 fprintf('These are %.1f%% of all spikes in the central time-bin! \n \n',100*sum(spikes_to_delete>0)/sum(spikes_in_central_bin))
 

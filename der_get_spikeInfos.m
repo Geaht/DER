@@ -20,7 +20,7 @@ function [spikeInfos] = der_get_spikeInfos(clusterAlgorithm, nr_chBundle)
 %   unitClass: classification of unit in SU (single-), MU (multi-unit) or A
 %       (artifact)
 %   index_TS: time of amplitude of a spike in milliseconds
-%   SpikeShapes: shape of spike (in out setup using combinato: 64 samples)
+%   SpikeShapes: shape of spike (in our setup using combinato: 64 samples)
 %
 %
 %   Licence:
