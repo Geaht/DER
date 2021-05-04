@@ -119,13 +119,14 @@ for channel = 1:nr_chBundle:nr_channels
                 cluster_nr = clusterID(index_duplicateSpikes(:,1));
                 cluster_nr2 = clusterID(index_duplicateSpikes(:,2));
 
-                index_arfitactsToDelete = sort([index_duplicateSpikes(cluster_nr == 0,1); index_duplicateSpikes(cluster_nr2 == 0,2)]);
+                index_artifactsToDelete = sort(reshape(index_duplicateSpikes(cluster_nr == 0 | cluster_nr2 == 0,:),[],1));
+%                 index_artifactsToDelete = sort([index_duplicateSpikes(cluster_nr == 0,1); index_duplicateSpikes(cluster_nr2 == 0,2)]);
                 index_duplicateSpikes(cluster_nr == 0 | cluster_nr2 == 0,:) = [];
 
 
                 % kill all artifacts, if spike which is compared to is not in
                 % artifact cluster
-                timeStamps(index_arfitactsToDelete) = nan;
+                timeStamps(index_artifactsToDelete) = nan;
                 cluster_nr = [clusterID(index_duplicateSpikes(:,1)) clusterID(index_duplicateSpikes(:,2))];
 
                 % delete spike of MU, if same spike is detected in SU and MU;

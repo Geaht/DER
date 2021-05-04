@@ -42,7 +42,7 @@ end
 no_samples = 40;
 
 if ~exist('minNoEventsToCompaire','var') || isempty(minNoEventsToCompaire)
-    minNoEventsToCompaire = 2;
+    minNoEventsToCompaire = 3;
 end
 minNoPairs = size(nchoosek([1:minNoEventsToCompaire],2),1);
 
