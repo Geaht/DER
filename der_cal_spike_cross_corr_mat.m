@@ -132,7 +132,7 @@ for idx_lead_spike=1:numel(spikeInfos.timeStamps)
         end
         
         % plot a progressbar in output
-        dds_progressbar('Calculating cross_corrs',percentage_job_done_counter);
+        der_progressbar('Calculating cross_corrs',percentage_job_done_counter);
         percentage_job_done_counter=percentage_job_done_counter+1;
     end
     
