@@ -108,9 +108,9 @@ switch clusterAlgorithm
                 channame = [channame{1} num2str(localChanNo)];
                 cluster_info(2,chan) = {channame};
 
-                % get current filenames
-                spikesfile = sprintf('CSC%d_spikes.mat',channels(chan));
-                timesfile = sprintf('times_CSC%d.mat',channels(chan));
+%                 % get current filenames
+%                 spikesfile = sprintf('CSC%d_spikes.mat',channels(chan));
+%                 timesfile = sprintf('times_CSC%d.mat',channels(chan));
 
                 % save data of current channel
                 save(spikesfile,'index_ts','spikes')
