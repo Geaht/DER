@@ -90,11 +90,16 @@ SpikeShapes = [];
 switch clusterAlgorithm
     case 'Combinato'
         load cluster_info cluster_info
+        
+        timesFiles = dir('times_*.mat');
 
         % loop over channels
-        for chan = 1:no_channels
-            timesfile = sprintf('times_CSC%d.mat',channels(chan));
-            currBundle = index_bundle(chan);
+        for idx = 1:size(timesFiles,1)
+            timesfile = timesFiles(idx).name;
+            chan = str2double(regexp(timesfile,'[\d.]+','match'));
+%         for chan = 1:no_channels
+%             timesfile = sprintf('times_CSC%d.mat',channels(chan));
+%             currBundle = index_bundle(chan);
 
             if exist(timesfile,'file')
                 load(timesfile, 'cluster_class', 'spikes')

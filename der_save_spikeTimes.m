@@ -56,9 +56,17 @@ switch clusterAlgorithm
 
         chanPerBundle = max(unique(spikeInfos.channelID)) / max(unique(spikeInfos.bundleID));
         localChanNo = 0;
-
+        
         % save new spike-times
-        for chan = 1:no_channels
+        timesFiles = dir('times_*.mat');
+        spikesFiles = dir('*_spikes.mat');
+        
+        % loop over channels
+        for idx = 1:size(timesFiles,1)
+            timesfile = timesFiles(idx).name;
+            spikesfile = spikesFiles(idx).name;
+            chan = str2double(regexp(timesfile,'[\d.]+','match'));
+%         for chan = 1:no_channels
             index_currSp = spikeInfos.channelID == channels(chan);
 
             if localChanNo < chanPerBundle
