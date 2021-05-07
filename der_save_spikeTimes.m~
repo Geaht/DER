@@ -119,21 +119,15 @@ switch clusterAlgorithm
                     % save data of current channel
                     save(spikesfile,'index_ts','spikes')
                     save(timesfile,'spikes','cluster_class')
-                    
-                else % if no spike events remain in a channel after DER, previous files of spike events will be deleted
-                    
+                else
                     delete(timesfile, spikesfile)
-                    
                 end
-                
             else
-                
                 if exist(timesfile,'file')
                     error(sprintf('Missmatch: %s is missing',spikesfile))
                 else
                     error(sprintf('Missmatch: %s is missing',timesfile))
                 end
-                
             end
         end
 
@@ -179,21 +173,13 @@ switch clusterAlgorithm
                     % save data of current channel
                     save(spikesfile,'index_ts','spikes','-append')
                     save(timesfile,'spikes','cluster_class','-append')
-                    
-                else % if no spike events remain in a channel after DER, previous files of spike events will be deleted
-                    
-                    delete(timesfile, spikesfile)
-                    
                 end
-                
             else
-                
                 if exist(timesfile,'file')
                     error(sprintf('Missmatch: %s is missing',spikesfile))
                 else
                     error(sprintf('Missmatch: %s is missing',timesfile))
                 end
-                
             end
         end  
 end
