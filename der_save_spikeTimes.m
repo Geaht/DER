@@ -47,7 +47,7 @@ for idx = 1:no_channels
     fclose(fileID);       
     chnname{idx} = header{find(strcmp('-AcqEntName',header))+1};
 end
-[~, idx] = sort(channels);
+[channels, idx] = sort(channels);
 chnname = chnname(idx);
 
 switch clusterAlgorithm
