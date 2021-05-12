@@ -97,54 +97,51 @@ switch clusterAlgorithm
         for idx = 1:size(timesFiles,1)
             timesfile = timesFiles(idx).name;
             chan = str2double(regexp(timesfile,'[\d.]+','match'));
-%         for chan = 1:no_channels
-%             timesfile = sprintf('times_CSC%d.mat',channels(chan));
-%             currBundle = index_bundle(chan);
 
-            if exist(timesfile,'file')
-                load(timesfile, 'cluster_class', 'spikes')
-                timeStamps = [timeStamps; cluster_class(:,2)]; %#ok<*AGROW,*IDISVAR,*NODEF> % time-stamp of spike event amplitude (sample 20)
-                SpikeShapes = [SpikeShapes; spikes]; % shape of individual spike events
-                channelID = [channelID; ones(size(cluster_class,1),1) + (channels(chan)-1)]; % channel number of each individual spike event
-                bundleID = [bundleID; zeros(size(cluster_class,1),1) + currBundle]; % bundle number of each individual spike event
-                clusterID = [clusterID; cluster_class(:,1)]; % cluster number of each individual spike event
+            currBundle = index_bundle(chan);
 
-                currChnname = cell(size(spikes,1),1);
-                currChnname(:) = {chnname{chan}(1:end-1)};
-                region = [region; currChnname];
+            load(timesfile, 'cluster_class', 'spikes')
+            timeStamps = [timeStamps; cluster_class(:,2)]; %#ok<*AGROW,*IDISVAR,*NODEF> % time-stamp of spike event amplitude (sample 20)
+            SpikeShapes = [SpikeShapes; spikes]; % shape of individual spike events
+            channelID = [channelID; ones(size(cluster_class,1),1) + (channels(chan)-1)]; % channel number of each individual spike event
+            bundleID = [bundleID; zeros(size(cluster_class,1),1) + currBundle]; % bundle number of each individual spike event
+            clusterID = [clusterID; cluster_class(:,1)]; % cluster number of each individual spike event
 
-                % get unit-class for each spike
-                cd(fullfile(sprintf('CSC%d',channels(chan))))
-                thresholds = h5read(sprintf('data_CSC%d.h5', channels(chan)),'/thr');
-                currThreshold = nanmedian(thresholds(3,:));
-                cd ..
-                currUnitID = cluster_info{1,chan};
+            currChnname = cell(size(spikes,1),1);
+            currChnname(:) = {chnname{chan}(1:end-1)};
+            region = [region; currChnname];
 
-                threshold = [threshold; zeros(size(cluster_class,1),1) + currThreshold];
-                currUnitClasses = cell(size(cluster_class,1),1);
-                for uc = 1:length(currUnitID)
-                    index_currUC = cluster_class(:,1) == uc;
-                    currUC = currUnitID(uc);
+            % get unit-class for each spike
+            cd(fullfile(sprintf('CSC%d',channels(chan))))
+            thresholds = h5read(sprintf('data_CSC%d.h5', channels(chan)),'/thr');
+            currThreshold = nanmedian(thresholds(3,:));
+            cd ..
+            currUnitID = cluster_info{1,chan};
 
-                    if currUC == -1
-                        currUC = {'A'};
-                    elseif currUC == 1
-                        currUC = {'MU'};
-                    elseif currUC == 2
-                        currUC = {'SU'};
-                    end
+            threshold = [threshold; zeros(size(cluster_class,1),1) + currThreshold];
+            currUnitClasses = cell(size(cluster_class,1),1);
+            for uc = 1:length(currUnitID)
+                index_currUC = cluster_class(:,1) == uc;
+                currUC = currUnitID(uc);
 
-                    currUnitClasses(index_currUC) = currUC;
-
+                if currUC == -1
+                    currUC = {'A'};
+                elseif currUC == 1
+                    currUC = {'MU'};
+                elseif currUC == 2
+                    currUC = {'SU'};
                 end
-                unitClass = [unitClass; currUnitClasses];
 
-                % set unitClass for artifacts
-                unclassified = cellfun(@isempty,unitClass,'Uniformoutput', false);
-                index_unclassi = cell2mat(unclassified);
-                unitClass(index_unclassi) = {'A'};
+                currUnitClasses(index_currUC) = currUC;
 
             end
+            unitClass = [unitClass; currUnitClasses];
+
+            % set unitClass for artifacts
+            unclassified = cellfun(@isempty,unitClass,'Uniformoutput', false);
+            index_unclassi = cell2mat(unclassified);
+            unitClass(index_unclassi) = {'A'};
+
         end
         
         
