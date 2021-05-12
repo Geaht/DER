@@ -72,7 +72,7 @@ switch clusterAlgorithm
             timesfile = sprintf(temp_timesName,chan);
             spikesfile = sprintf(temp_spikesName,chan);
             
-            if exist(timesfile,'file') && exist(spikesfile,'file') || ~exist(timesfile,'file') && ~exist(spikesfile,'file')
+            if exist(timesfile,'file') && exist(spikesfile,'file')
                 
                 index_currSp = spikeInfos.channelID == chan;
 
@@ -114,7 +114,7 @@ switch clusterAlgorithm
                     
                 end
                 
-            else
+            elseif exist(timesfile,'file') || exist(spikesfile,'file')
                 
                 if exist(timesfile,'file')
                     error(['Missmatch: ' spikesfile ' is missing'])
