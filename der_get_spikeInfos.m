@@ -77,7 +77,6 @@ end
 
 
 % get all spikeshapes, peaktimes and indices of bundle
-channelname = [];
 region = [];
 bundleID = [];
 channelID = [];
@@ -111,10 +110,6 @@ switch clusterAlgorithm
             currChnname = cell(size(spikes,1),1);
             currChnname(:) = {chnname{chan}(1:end-1)};
             region = [region; currChnname];
-            
-            currChnname = cell(size(spikes,1),1);
-            currChnname(:) = chnname(chan);
-            channelname = [channelname; currChnname];
 
             % get unit-class for each spike
             cd(fullfile(sprintf('CSC%d',channels(chan))))
@@ -167,11 +162,6 @@ switch clusterAlgorithm
                 currChnname = cell(size(spikes,1),1);
                 currChnname(:) = {chnname{chan}(1:end-1)};
                 region = [region; currChnname];
-                
-                currChnname = cell(size(spikes,1),1);
-                currChnname(:) = chnname(chan);
-                channelname = [channelname; currChnname];
-            
 
                 % get unit-class for each spike
                 spikefile = sprintf('CSC%d_spikes.mat',channels(chan));
@@ -204,7 +194,7 @@ end
 
 
 detectionLabel = ones(size(timeStamps,1),1);
-spikeInfos = table(channelname, region, bundleID, channelID, clusterID, unitClass, threshold, timeStamps, SpikeShapes, detectionLabel);
+spikeInfos = table(region, bundleID, channelID, clusterID, unitClass, threshold, timeStamps, SpikeShapes, detectionLabel);
 [~, idxsort] = sort(spikeInfos.timeStamps);
 spikeInfos = spikeInfos(idxsort,:);
 

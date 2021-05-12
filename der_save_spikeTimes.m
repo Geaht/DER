@@ -54,9 +54,6 @@ switch clusterAlgorithm
     case 'Combinato'
         cluster_info = cell(3,no_channels);
         cluster_info(2,:) = chnname;
-
-        chanPerBundle = max(unique(spikeInfos.channelID)) / max(unique(spikeInfos.bundleID));
-        localChanNo = 0;
         
         % save new spike-times
         
@@ -77,7 +74,6 @@ switch clusterAlgorithm
             
             if exist(timesfile,'file') && exist(spikesfile,'file')
                 
-%                 index_currSp = strcmo(spikeInfos.channelname, chnname(idx));
                 index_currSp = spikeInfos.channelID == chan;
 
                 if sum(index_currSp) > 0
