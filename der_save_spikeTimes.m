@@ -53,6 +53,7 @@ chnname = chnname(idx);
 switch clusterAlgorithm
     case 'Combinato'
         cluster_info = cell(3,no_channels);
+        cluster_info(2,:) = chnname;
 
         chanPerBundle = max(unique(spikeInfos.channelID)) / max(unique(spikeInfos.bundleID));
         localChanNo = 0;
@@ -76,12 +77,6 @@ switch clusterAlgorithm
             if exist(timesfile,'file') && exist(spikesfile,'file')
             
                 index_currSp = spikeInfos.channelID == channels(idx);
-
-                if localChanNo < chanPerBundle
-                    localChanNo = localChanNo + 1;
-                else
-                    localChanNo = 1;
-                end
 
                 if sum(index_currSp) > 0
 
@@ -110,11 +105,6 @@ switch clusterAlgorithm
                     end
 
                     cluster_info(1,idx) = {unitID};
-
-                    channame = spikeInfos.region(index_currSp);
-
-                    channame = [channame{1} num2str(localChanNo)];
-                    cluster_info(2,idx) = {channame};
 
                     % save data of current channel
                     save(spikesfile,'index_ts','spikes')
