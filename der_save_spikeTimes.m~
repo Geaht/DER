@@ -54,6 +54,9 @@ switch clusterAlgorithm
     case 'Combinato'
         cluster_info = cell(3,no_channels);
         cluster_info(2,:) = chnname;
+
+        chanPerBundle = max(unique(spikeInfos.channelID)) / max(unique(spikeInfos.bundleID));
+        localChanNo = 0;
         
         % save new spike-times
         
@@ -69,12 +72,13 @@ switch clusterAlgorithm
         % loop over channels
         for idx = 1:no_channels
             chan = channels(idx);
-            timesfile = sprintf(temp_timesName,chan);
-            spikesfile = sprintf(temp_spikesName,chan);
+            timesfile = sprintf(temp_timesName,idx);
+            spikesfile = sprintf(temp_spikesName,idx);
             
             if exist(timesfile,'file') && exist(spikesfile,'file')
                 
-                index_currSp = spikeInfos.channelID == chan;
+%                 index_currSp = strcmo(spikeInfos.channelname, chnname(idx));
+                index_currSp = spikeInfos.channelID == channels(idx);
 
                 if sum(index_currSp) > 0
 
@@ -89,7 +93,7 @@ switch clusterAlgorithm
                     unitClasses = spikeInfos.unitClass(index_currSp);
                     unitClasses = unitClasses(index_first);
 
-                    cluster_info(3,chan) = {ones(1,size(clusterIDList(clusterIDList~=0),1))};
+                    cluster_info(3,idx) = {ones(1,size(clusterIDList(clusterIDList~=0),1))};
 
                     unitClasses = unitClasses(~contains(unitClasses,'A'));
 
@@ -102,7 +106,7 @@ switch clusterAlgorithm
                         end
                     end
 
-                    cluster_info(1,chan) = {unitID};
+                    cluster_info(1,idx) = {unitID};
 
                     % save data of current channel
                     save(spikesfile,'index_ts','spikes')
@@ -114,12 +118,12 @@ switch clusterAlgorithm
                     
                 end
                 
-            elseif exist(timesfile,'file') || exist(spikesfile,'file')
+            else
                 
                 if exist(timesfile,'file')
-                    error(['Missmatch: ' spikesfile ' is missing'])
+                    error(sprintf('Missmatch: %s is missing',spikesfile))
                 else
-                    error(['Missmatch: ' timesfile ' is missing'])
+                    error(sprintf('Missmatch: %s is missing',timesfile))
                 end
                 
             end
@@ -177,9 +181,9 @@ switch clusterAlgorithm
             else
                 
                 if exist(timesfile,'file')
-                    error(['Missmatch: ' spikesfile ' is missing'])
+                    error(sprintf('Missmatch: %s is missing',spikesfile))
                 else
-                    error(['Missmatch: ' timesfile ' is missing'])
+                    error(sprintf('Missmatch: %s is missing',timesfile))
                 end
                 
             end

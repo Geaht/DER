@@ -20,7 +20,7 @@ function [spikeInfos] = der_get_spikeInfos(clusterAlgorithm, nr_chBundle)
 %   unitClass: classification of unit in SU (single-), MU (multi-unit) or A
 %       (artifact)
 %   index_TS: time of amplitude of a spike in milliseconds
-%   SpikeShapes: shape of spike (in our setup using combinato: 64 samples)
+%   SpikeShapes: shape of spike (in out setup using combinato: 64 samples)
 %
 %
 %   Licence:
@@ -77,6 +77,7 @@ end
 
 
 % get all spikeshapes, peaktimes and indices of bundle
+channelname = [];
 region = [];
 bundleID = [];
 channelID = [];
@@ -110,6 +111,7 @@ switch clusterAlgorithm
             currChnname = cell(size(spikes,1),1);
             currChnname(:) = {chnname{chan}(1:end-1)};
             region = [region; currChnname];
+            
 
             % get unit-class for each spike
             cd(fullfile(sprintf('CSC%d',channels(chan))))
@@ -194,7 +196,7 @@ end
 
 
 detectionLabel = ones(size(timeStamps,1),1);
-spikeInfos = table(region, bundleID, channelID, clusterID, unitClass, threshold, timeStamps, SpikeShapes, detectionLabel);
+spikeInfos = table(region, bundleID, channelID, threshold, clusterID, unitClass, timeStamps, SpikeShapes, detectionLabel);
 [~, idxsort] = sort(spikeInfos.timeStamps);
 spikeInfos = spikeInfos(idxsort,:);
 

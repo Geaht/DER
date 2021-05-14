@@ -12,7 +12,7 @@ function [] = DER(dataPath, clusterAlgorithm, save_structures)
 %   you can optain one at http://mozilla.org/MPL/2.0/.
 
 
-if exist('dataPath','var') && ~isemtpy(dataPath)
+if exist('dataPath','var') && ~isempty(dataPath)
     cd(dataPath)
 end
 if ~exist('save_structures','var')
