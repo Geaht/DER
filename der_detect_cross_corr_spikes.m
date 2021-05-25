@@ -256,7 +256,7 @@ if option_for_detection==1
                        temp_delta_t= pdist2(spikeInfos.timeStamps(logical(A2_delete_idx_new)),...
                            spikeInfos.timeStamps(logical(A1_delete_idx)));
                        
-                       assert(sum(sum(temp_delta_t<=bin_width/2)) == N_central_bin,...
+                       assert(sum(sum(temp_delta_t < bin_width/2)) == N_central_bin,...
                        'Number of spikes to delete do not match the cross-correlations!')
                        
                        if N_central_bin < sum(A1_delete_idx) ||  N_central_bin < sum(A2_delete_idx_new) 
@@ -502,7 +502,7 @@ elseif option_for_detection == 2
                    spikeInfos.timeStamps(logical(A1_delete_idx)));
             
                % changed from smaller equal to smaller to avoid error if dist is exactly bin_width/2
-               assert(sum(sum(temp_delta_t<= bin_width/2)) == N_central_bin,...
+               assert(sum(sum(temp_delta_t< bin_width/2)) == N_central_bin,...
                'Number of spikes to delete do not match the cross-correlations!');
            
                if N_central_bin < sum(A1_delete_idx) ||  N_central_bin < sum(A2_delete_idx_new) 
