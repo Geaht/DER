@@ -65,6 +65,7 @@ Factor | Part detected
 
 ## References
 
-Cite as: TBA
+Cite as: 
 
+Dehnen, G.; Kehl, M.S.; Darcher, A.; Müller, T.T.; Macke, J.H.; Borger, V.; Surges, R.; Mormann, F. Duplicate Detection of Spike Events: A Relevant Problem in Human Single-Unit Recordings. Brain Sci. 2021, 11, 761. https://doi.org/10.3390/brainsci11060761
 
