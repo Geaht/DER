@@ -37,12 +37,6 @@ function [cross_corr_mat_info] = ...
 %   Licence, v. 2.0. if a copy of the MPL was not distributed with this file,
 %   you can optain one at http://mozilla.org/MPL/2.0/.
 
-%% remove this section later
-dbstop if error
-code_path=which('der_cal_spike_cross_corr_mat');
-addpath(genpath(code_path(1:end-30)));
-
-
 %% Input parameters and default values
 if ~exist('hist_limit','var')
     hist_limit=20;  % ms
@@ -102,6 +96,9 @@ if skip_labeled_spikes==1
     spikeInfos=spikeInfos(spikeInfos.detectionLabel==1,:);
 end
 
+%% assure DER tools are in the path 
+code_path=which('der_cal_spike_cross_corr_mat');
+addpath(genpath(code_path(1:end-30)));
 
 %% Calculate all cross-correlations in the session
 
