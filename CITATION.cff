@@ -1,0 +1,35 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: 'Duplicate Event Removal '
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Gert
+    family-names: Dehnen
+  - given-names: Marcel
+    name-particle: S
+    family-names: Kehl
+  - given-names: Alana
+    family-names: Darcher
+  - given-names: Tamara
+    family-names: Müller
+  - given-names: Jakob
+    name-particle: H
+    family-names: Macke
+  - given-names: Valeri
+    family-names: Borger
+  - given-names: Rainer
+    family-names: Surger
+  - given-names: Florian
+    family-names: Mormann
+identifiers:
+  - type: doi
+    value: 10.3390/brainsci11060761
+repository-code: 'https://github.com/Geaht/DER'
+license: MPL-2.0
+version: '1.0'
+date-released: '2021-02-01'
